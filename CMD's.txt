@@ -1,0 +1,77 @@
+INSTALL TOMCAT
+------------------
+
+1.	cd /opt
+	sudo wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65.tar.gz
+	sudo tar -xvf apache-tomcat-9.0.65.tar.gz
+
+
+2. cd /opt/apache-tomcat-9.0.65/conf
+
+
+3.	sudo vi tomcat-users.xml
+	# ---add-below-line at the end (2nd-last line)----
+	# <user username="admin" password="admin1234" roles="admin-gui, manager-gui"/>
+
+
+4. sudo ln -s /opt/apache-tomcat-9.0.65/bin/startup.sh /usr/bin/startTomcat
+
+
+5. sudo ln -s /opt/apache-tomcat-9.0.65/bin/shutdown.sh /usr/bin/stopTomcat
+
+
+6. sudo vi /opt/apache-tomcat-9.0.65/webapps/manager/META-INF/context.xml
+
+	comment:
+	<!-- Valve className="org.apache.catalina.valves.RemoteAddrValve"
+	  allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+
+
+7. sudo vi /opt/apache-tomcat-9.0.65/webapps/host-manager/META-INF/context.xml
+
+	comment:
+	<!-- Valve className="org.apache.catalina.valves.RemoteAddrValve"
+	  allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+
+ 
+8. sudo apt update
+
+
+9. sudo apt install openjdk-11-jre
+
+
+10. sudo apt install maven -y
+
+
+11. sudo stopTomcat
+
+
+12. sudo startTomcat
+
+
+13. git clone https://github.com/Pavan-1997/Java_Maven_Tomcat.git
+
+
+14. cd Petclinic
+
+
+15. mvn clean package
+
+
+16. sudo cp target/*.war /opt/apache-tomcat-9.0.65/webapps/
+
+
+17. Access the apache server with IP Port and followed by path (/petclinic) 
+
+
+18. If you are not a root user that is say ubuntu
+
+we wont be able to access webapps folder
+
+to check permisssions use below
+
+ls -lrt
+
+Now change the owner of the folder webapps 
+
+sudo chown -R ubuntu apache-tomcat-9.0.65
